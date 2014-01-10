@@ -67,6 +67,17 @@ class exports.JsonClient
             if parse then parseBody error, response, body, callback
             else callback error, response, body
 
+    # Send a POST request to path with given JSON as body.
+    postForm: (path, json, callback, parse = true) ->
+        options = @options
+        options.method = "POST"
+        options.uri = url.resolve @host, path
+        options.form = json
+        options.headers = @headers
+
+        request options, (error, response, body) ->
+            if parse then parseBody error, response, body, callback
+            else callback error, response, body
 
     # Send a PUT request to path with given JSON as body.
     put: (path, json, callback, parse = true) ->

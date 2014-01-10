@@ -32,6 +32,11 @@ client.post('posts/', data, function(err, res, body) {
   return console.log(res.statusCode);
 });
 
+// uses post form fields instead of application/json
+client.postForm('posts/', data, function(err, res, body) {
+  return console.log(res.statusCode);
+});
+
 client.get('posts/', function(err, res, body) {
   return console.log(body.rows[0].title);
 });
