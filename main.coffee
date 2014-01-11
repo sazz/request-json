@@ -47,7 +47,7 @@ class exports.JsonClient
     get: (path, callback, parse = true) ->
         options = @options
         options.method = 'GET'
-        options.uri = url.resolve @host, path
+        options.uri = url.resolve @host, @adaptPath(path)
         options.headers = @headers
 
         request options, (error, response, body) ->
@@ -59,7 +59,7 @@ class exports.JsonClient
     post: (path, json, callback, parse = true) ->
         options = @options
         options.method = "POST"
-        options.uri = url.resolve @host, path
+        options.uri = url.resolve @host, @adaptPath(path)
         options.json = json
         options.headers = @headers
 
@@ -71,7 +71,7 @@ class exports.JsonClient
     postForm: (path, json, callback, parse = true) ->
         options = @options
         options.method = "POST"
-        options.uri = url.resolve @host, path
+        options.uri = url.resolve @host, @adaptPath(path)
         options.form = json
         options.headers = @headers
 
@@ -83,7 +83,7 @@ class exports.JsonClient
     put: (path, json, callback, parse = true) ->
         options = @options
         options.method = "PUT"
-        options.uri = url.resolve @host, path
+        options.uri = url.resolve @host, @adaptPath(path)
         options.json = json
         options.headers = @headers
 
@@ -96,7 +96,7 @@ class exports.JsonClient
     del: (path, callback, parse = true) ->
         options = @options
         options.method = "DELETE"
-        options.uri = url.resolve @host, path
+        options.uri = url.resolve @host, @adaptPath(path)
         options.headers = @headers
 
         request options, (error, response, body) ->
@@ -145,3 +145,6 @@ class exports.JsonClient
     # Retrieve file located at *path* and return it as stream.
     saveFileAsStream: (path, callback) ->
         @get path, callback, false  # do not parse result
+
+    adaptPath: (path) ->
+        if @options.basePath then @options.basePath + path else path
